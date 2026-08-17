@@ -2013,6 +2013,17 @@ a { color: inherit; }
   margin: 0;
 }
 .contact-success[hidden] { display: none; }
+.contact-error {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.contact-error a { color: var(--accent-blue-soft); }
+.contact-error[hidden] { display: none; }
 
 /* Footer */
 .site-footer {
@@ -3522,21 +3533,44 @@ a { color: inherit; }
 (() => {
   const form = document.getElementById('contact-form');
   const success = document.getElementById('contact-success');
+  const errorBox = document.getElementById('contact-error');
   if (!form || !success) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (errorBox) errorBox.hidden = true;
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+
     const data = new FormData(form);
-    const name = data.get('name');
-    const email = data.get('email');
-    const message = data.get('message');
+    const payload = Object.fromEntries(data.entries());
+    payload.subject = `New project inquiry from ${payload.name}`;
 
-    const subject = encodeURIComponent(`New project inquiry from ${name}`);
-    const body = encodeURIComponent(`${message}\n\nFrom: ${name} (${email})`);
-    window.location.href = `mailto:emmanuel64775@email.com?subject=${subject}&body=${body}`;
-
-    form.hidden = true;
-    success.hidden = false;
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (result.success) {
+        form.hidden = true;
+        success.hidden = false;
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      if (errorBox) errorBox.hidden = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    }
   });
 })();
 
