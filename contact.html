@@ -1961,7 +1961,8 @@ a { color: inherit; }
   gap: 14px;
 }
 .contact-form input,
-.contact-form textarea {
+.contact-form textarea,
+.contact-form select {
   background: color-mix(in srgb, var(--overlay) 6%, transparent);
   border: 1px solid color-mix(in srgb, var(--overlay) 12%, transparent);
   border-radius: 10px;
@@ -1969,14 +1970,52 @@ a { color: inherit; }
   color: var(--text);
   font-size: 15px;
   font-family: inherit;
+  width: 100%;
 }
 .contact-form textarea { resize: vertical; }
+.contact-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c84a8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 42px;
+  cursor: pointer;
+}
+.contact-form select:invalid { color: var(--text-dim); }
+.contact-form option { color: var(--text); background: var(--bg); }
 .contact-form input::placeholder,
 .contact-form textarea::placeholder { color: var(--text-dim); }
 .contact-form input:focus,
-.contact-form textarea:focus {
+.contact-form textarea:focus,
+.contact-form select:focus {
   outline: none;
   border-color: rgba(79, 216, 255, 0.5);
+}
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 14px;
+}
+.contact-budget-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.contact-budget-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.contact-budget-hint {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.5;
+}
+@media (max-width: 520px) {
+  .contact-form-row { grid-template-columns: 1fr; }
 }
 .contact-form button {
   background: var(--gradient-primary);
@@ -3416,7 +3455,47 @@ a { color: inherit; }
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
         <input name="name" placeholder="Your name" required />
         <input name="email" type="email" placeholder="Email address" required />
-        <textarea name="message" placeholder="Tell us about your project" required rows="4"></textarea>
+
+        <div class="contact-form-row">
+          <select name="platform" required>
+            <option value="" disabled selected>Platform</option>
+            <option value="Twitch">Twitch</option>
+            <option value="YouTube">YouTube</option>
+            <option value="Kick">Kick</option>
+            <option value="Multiple platforms">Multiple platforms</option>
+            <option value="Indie game / Steam">Indie game / Steam</option>
+            <option value="SaaS / product">SaaS / product</option>
+            <option value="Other">Other</option>
+          </select>
+          <input name="channel_link" placeholder="Channel, game, or product link" required />
+        </div>
+
+        <select name="goal" required>
+          <option value="" disabled selected>What's your main goal right now?</option>
+          <option value="Grow toward Twitch Affiliate / Partner">Grow toward Twitch Affiliate / Partner</option>
+          <option value="Build an owned audience (email/SMS list)">Build an owned audience (email/SMS list)</option>
+          <option value="Launch or grow an indie game">Launch or grow an indie game</option>
+          <option value="Launch or grow a SaaS product">Launch or grow a SaaS product</option>
+          <option value="Get more brand or sponsor deals">Get more brand or sponsor deals</option>
+          <option value="Launch a merch store">Launch a merch store</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <input name="revenue_goal" placeholder="What's your monthly revenue goal? (e.g. $2,000/month)" />
+
+        <div class="contact-budget-field">
+          <label for="contact-budget">Which tier fits your budget?</label>
+          <select name="budget_tier" id="contact-budget" required>
+            <option value="" disabled selected>Select a budget tier</option>
+            <option value="Foundation - $1,200/month">Foundation — $1,200/month</option>
+            <option value="Growth - $2,500/month">Growth — $2,500/month</option>
+            <option value="Scale - $4,000-$5,000/month">Scale — $4,000–$5,000/month</option>
+            <option value="Not sure yet - let's talk">Not sure yet — let's talk</option>
+          </select>
+          <p class="contact-budget-hint">Based on Avenro's Audience Growth Retainer tiers. Not sure which fits? Pick "Not sure yet" and we'll figure it out on a call.</p>
+        </div>
+
+        <textarea name="message" placeholder="Anything else I should know about your project?" rows="4"></textarea>
         <button type="submit">Send message</button>
       </form>
     </div>
@@ -3533,7 +3612,8 @@ a { color: inherit; }
 
     const data = new FormData(form);
     const payload = Object.fromEntries(data.entries());
-    payload.subject = `New project inquiry from ${payload.name}`;
+    const tierLabel = payload.budget_tier ? ` — ${payload.budget_tier.split(' - ')[0]}` : '';
+    payload.subject = `New project inquiry from ${payload.name}${tierLabel}`;
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
