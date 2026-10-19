@@ -390,88 +390,16 @@ $('#brief').addEventListener('submit',function(e){e.preventDefault();
  $('#b-copy').hidden=false;});
 })();
 </script>
-<!--avenro-chat--><style>
-#avc-btn{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:2147483000;width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;background:#0096ff;box-shadow:0 8px 28px rgba(0,150,255,.45);display:flex;align-items:center;justify-content:center;transition:transform .15s}
-#avc-btn:hover{transform:scale(1.06)}#avc-btn svg{width:30px;height:30px}
-#avc-dot{position:absolute;top:2px;right:2px;width:13px;height:13px;border-radius:50%;background:#22c55e;border:2px solid #0a1220}
-#avc-panel{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 70px);z-index:2147483000;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100vh - 110px));display:none;flex-direction:column;background:#0b1424;border:1px solid #1c2c47;border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.55);overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#e8f0fb}
-#avc-panel.open{display:flex}
-#avc-head{display:flex;align-items:center;gap:10px;padding:14px 16px;background:linear-gradient(135deg,#0b3a66,#0b1424);border-bottom:1px solid #1c2c47}
-#avc-head .av{width:34px;height:34px;border-radius:10px;background:#0096ff;display:flex;align-items:center;justify-content:center;flex:none}
-#avc-head .av svg{width:20px;height:20px}
-#avc-head b{display:block;font-size:15px}#avc-head small{color:#8fb0d6;font-size:12px}
-#avc-x{margin-left:auto;background:none;border:0;color:#9db6d6;font-size:22px;cursor:pointer;line-height:1}
-#avc-log{flex:1;min-height:0;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-.avc-m{max-width:88%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.45;overflow-wrap:anywhere}
-.avc-m.b{align-self:flex-start;background:#13223b;border:1px solid #1d3253}
-.avc-m.u{align-self:flex-end;background:#0096ff;color:#04111f;font-weight:600}
-.avc-m a{color:#5cc0ff;text-decoration:underline}
-.avc-m.u a{color:#04111f}
-.avc-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 10px}
-.avc-chip{background:#10203a;border:1px solid #234169;color:#cfe3ff;border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer}
-.avc-chip:hover{background:#17305a}
-#avc-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #1c2c47;background:#0a1220}
-#avc-in{flex:1;min-width:0;background:#10203a;border:1px solid #234169;color:#e8f0fb;border-radius:12px;padding:10px 12px;font-size:14px;outline:0}
-#avc-in:focus{border-color:#0096ff}
-#avc-send{background:#0096ff;color:#04111f;border:0;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
-@media (max-width:480px){#avc-panel{height:calc(100vh - 100px)}}
-</style><div id="avc-panel" role="dialog" aria-label="Avenro assistant"><div id="avc-head"><span class="av"><svg viewBox="0 0 1024 1024"><path fill="#06183a" d="M100 810L510 143 700 447 620 547 510 372 325 678 497 543 600 634 790 404 753 370 920 302 905 503 858 465 600 752 497 655 270 810Z"/></svg></span><div><b>Avenro assistant</b><small>Ask about plans, pricing and services</small></div><button id="avc-x" type="button" aria-label="Close chat">&times;</button></div><div id="avc-log" aria-live="polite"></div><div class="avc-chips" id="avc-chips"></div><form id="avc-form" autocomplete="off"><input id="avc-in" type="text" placeholder="Type your question" aria-label="Your question"><button id="avc-send" type="submit">Send</button></form></div><button id="avc-btn" type="button" aria-label="Open Avenro assistant"><svg viewBox="0 0 1024 1024"><path fill="#06183a" d="M100 810L510 143 700 447 620 547 510 372 325 678 497 543 600 634 790 404 753 370 920 302 905 503 858 465 600 752 497 655 270 810Z"/></svg><span id="avc-dot"></span></button><script>
+<!--avenro-chat--><!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
-var P="../";
-var btn=document.getElementById('avc-btn'),panel=document.getElementById('avc-panel'),log=document.getElementById('avc-log'),chips=document.getElementById('avc-chips'),form=document.getElementById('avc-form'),inp=document.getElementById('avc-in');
-var S=P+'services/';
-var L={
- plans:'<a href="'+S+'sponsorship-ready-plans.html">Sponsorship Ready Plans</a>',
- profile:'<a href="'+S+'profile-plan.html">Profile Plan</a>',
- club:'<a href="'+S+'creator-club-plan.html">Creator Club Plan</a>',
- complete:'<a href="'+S+'complete-plan.html">Complete Plan</a>',
- contact:'<a href="'+S+'pricing-and-contact.html">Pricing and Contact page</a>',
- x:'<a href="https://x.com/AvenroHQ" target="_blank" rel="noopener">@AvenroHQ on X</a>'
-};
-function live(){
- panel.classList.remove('open');
- if(window.Tawk_API&&Tawk_API.maximize){try{Tawk_API.showWidget();Tawk_API.maximize()}catch(e){}return}
- window.Tawk_API=window.Tawk_API||{};window.Tawk_LoadStart=new Date();
- Tawk_API.onLoad=function(){try{Tawk_API.showWidget();Tawk_API.maximize()}catch(e){}};
- var s=document.createElement('script');s.async=true;s.src='https://embed.tawk.to/6a7fcc781d62051d4f67f928/1k01jddqr';s.charset='UTF-8';s.setAttribute('crossorigin','*');document.head.appendChild(s)}
-log.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-live]');if(t){e.preventDefault();live()}});
-var LIVE='<br><a href="#" data-live="1" style="display:inline-block;margin-top:6px;padding:7px 12px;border-radius:999px;background:#2f7bff;color:#fff;text-decoration:none;font-weight:600">Chat live with Emmanuel</a>';
-var KB=[
- {k:['hi','hello','hey','yo','good morning','good evening','sup'],a:'Hi! I am the Avenro assistant. I can tell you about our services, plans and pricing, or help you reach Emmanuel. What do you need?'},
- {k:['price','pricing','cost','how much','plan','plans','package','packages','rate','rates','pay'],a:'Our Twitch plans are <b>Profile Plan $300</b>, <b>Creator Club Plan $700</b> and <b>Complete Plan $1,000</b>. Blog posting alone is <b>$100</b>. Indie game outreach starts from <b>$50</b> and the launch package from <b>$400</b>. Monthly retainers start at $1,200. Full details are on the '+L.contact+'.'},
- {k:['profile plan','300'],a:'The '+L.profile+' is <b>$300</b>. I set up your Creator Profile and guide you through the Creator Sponsorship Certification, so brands can find you. Best for Twitch Affiliates and Partners with no sponsorship setup yet.'},
- {k:['creator club','club','700'],a:'The '+L.club+' is <b>$700</b>. It includes everything in the Profile Plan plus full preparation for your Twitch Creator Club application.'},
- {k:['complete plan','complete','1000','1,000'],a:'The '+L.complete+' is <b>$1,000</b>. It covers a well-structured profile, becoming a certified sponsorship member, and blog posting with lots of marketing plans. Everything in the Creator Club Plan is included too.'},
- {k:['certified','certification','sponsorship','sponsor','sponsors','creator program','brand deals','brands'],a:'The Twitch Creator Sponsorship Certification is the step that makes your profile eligible for sponsorship campaign invitations through Twitch. I guide streamers through it as part of the plans. See '+L.plans+'.'},
- {k:['blog','blogs','blog post','blog posting','article','articles'],a:'Blog posting is <b>$100</b> for one post, written and published for you. You can also see real blog posts I wrote for clients on the <a href="'+S+'case-studies.html">Case studies page</a>.'},
- {k:['indie','steam','wishlist','wishlists','game dev','developer','next fest','demo','game'],a:'For indie devs I do Steam page checks, creator and streamer outreach and launch plans. Outreach starts from <b>$50</b> and the launch package from <b>$400</b>. See <a href="'+S+'indie-game-growth.html">Indie Game Growth</a>.'},
- {k:['twitch','streamer','streamers','stream','affiliate','partner'],a:'For Twitch streamers I build the profile, sponsorship readiness, blog posting and marketing plans. Start with '+L.plans+', or tell me what your channel needs.'},
- {k:['youtube','yt','channel'],a:'I help with YouTube channel services too. See <a href="'+S+'youtube-channel-services.html">YouTube Channel Services</a>.'},
- {k:['saas','software','product','startup','founder'],a:'For SaaS founders I help with product growth and visibility. See <a href="'+S+'saas-product-growth.html">SaaS Product Growth</a>.'},
- {k:['ads','ad','advertising','paid','google ads','campaign'],a:'Paid growth and advertising is covered on <a href="'+S+'paid-growth-advertising.html">this page</a>.'},
- {k:['merch','store','shop','design'],a:'I also do merch store design. See <a href="'+S+'merch-store-design.html">Merch Store Design</a>.'},
- {k:['pr','press','visibility','media'],a:'PR and digital visibility is on <a href="'+S+'pr-digital-visibility.html">this page</a>.'},
- {k:['retainer','monthly','month','ongoing'],a:'Monthly growth retainers are $1,200, $2,500 and $4,000 to $5,000 per month. Details are on the <a href="'+S+'growth-retainers-and-packages.html">retainers page</a>.'},
- {k:['review','reviews','proof','results','case','cases','case study','client','clients','portfolio','real'],a:'You can see real client reviews and blog posts on the <a href="'+S+'case-studies.html">Case studies page</a>.'},
- {k:['free','tool','tools','audit','check'],a:'We have free tools such as a readiness check and a UTM builder on the <a href="'+S+'free-tools.html">Free tools page</a>. You can also reply to us on X for a free tip.'},
- {k:['about','who','founder','emmanuel','avenro','team','owner'],a:'Avenro is a growth studio for streamers, creators, indie games and SaaS founders, founded by God\'s Favour Emmanuel. See the <a href="'+S+'about.html">About page</a>.'},
- {k:['fiverr','kwork'],a:'Avenro also takes orders on Kwork and Fiverr. For direct orders, use the '+L.contact+' or message us on X.'},
- {k:['talk to emmanuel','talk to','speak to','contact emmanuel','contact','talk','hire','book','start','get started','email','message','dm','reach','call','buy','order'],a:'Great! The fastest way is the '+L.contact+', where you can pick a plan and send your details. You can also DM '+L.x+'.'+LIVE},
- {k:['thanks','thank you','thx','ok','okay','cool','nice'],a:'You are welcome! If you want to start, use the '+L.contact+' or DM '+L.x+'.'}
-];
-var FALLBACK='I am not sure I got that. You can ask about <b>pricing</b>, <b>Twitch plans</b>, <b>indie game growth</b> or <b>blog posting</b>. Or reach Emmanuel directly on the '+L.contact+' or '+L.x+'.'+LIVE;
-var CH=['Pricing','Twitch plans','Indie game growth','Blog posting','Talk to Emmanuel'];
-function add(t,w,html){var d=document.createElement('div');d.className='avc-m '+w;if(html)d.innerHTML=t;else d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight}
-function norm(s){return ' '+s.toLowerCase().replace(/[^a-z0-9$, ]/g,' ').replace(/\s+/g,' ').trim()+' '}
-function answer(q){
- var n=norm(q),best=null,bs=0;
- KB.forEach(function(e){var s=0;e.k.forEach(function(k){if(n.indexOf(' '+k+' ')>-1||(k.length>4&&n.indexOf(k)>-1))s+=k.split(' ').length+1});if(s>bs){bs=s;best=e}});
- return best?best.a:FALLBACK}
-function say(q){add(q,'u');setTimeout(function(){add(answer(q),'b',true)},350)}
-CH.forEach(function(c){var b=document.createElement('button');b.type='button';b.className='avc-chip';b.textContent=c;b.onclick=function(){if(c==='Talk to Emmanuel'){add(c,'u');add('Opening live chat with Emmanuel...','b');setTimeout(live,400);return}say(c==='Twitch plans'?'twitch plans pricing':c==='Talk to Emmanuel'?'contact':c)};chips.appendChild(b)});
-add('Hi! I am the Avenro assistant. Ask me about our services, plans and pricing, or how to reach Emmanuel.','b');
-function toggle(){panel.classList.toggle('open');if(panel.classList.contains('open'))setTimeout(function(){inp.focus()},50);var d=document.getElementById('avc-dot');if(d)d.style.display='none'}
-btn.onclick=toggle;document.getElementById('avc-x').onclick=toggle;
-form.onsubmit=function(e){e.preventDefault();var v=inp.value.trim();if(!v)return;inp.value='';say(v)};
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6ad67a4d25a51334c5684ba4/1k5asrge1';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
 })();
-</script></body></html>
+</script>
+<!--End of Tawk.to Script--></body></html>
