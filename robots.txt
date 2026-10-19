@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://emmanuel64775-netizen.github.io/avenrosite/sitemap.xml
