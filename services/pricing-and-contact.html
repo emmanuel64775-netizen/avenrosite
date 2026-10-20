@@ -356,10 +356,18 @@ body>*{position:relative;z-index:1}
         <label for="b-msg">Anything I should know (optional)<textarea id="b-msg" rows="3" style="width:100%;font:inherit;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:inherit"></textarea></label>
         <button class="btn primary" id="b-send" type="submit" style="justify-self:start">Send my brief</button>
         <button class="btn" type="button" id="b-copy" hidden style="justify-self:start">Copy brief</button>
+        <div class="cta-row" style="margin:4px 0 2px"><a class="btn" type="button" id="b-mailto" href="#">Email me instead</a><a class="btn" href="https://x.com/AvenroHQ" target="_blank" rel="noopener">Message on X</a></div>
+        <button class="btn" type="button" id="b-copy" hidden style="justify-self:start">Copy brief</button>
         <div class="out" id="b-out" aria-live="polite">Fill in the form and press Send. You can also chat live with me using the chat bubble.</div>
       </form>
     </div>
   </section>
+  <section class="s" id="updates" style="margin-top:0"><div class="s-head"><h2>Get Avenro updates</h2><p>Growth tips for streamers and indie devs, plus new plans, sent now and then. No spam.</p></div>
+    <form class="result form" id="news" novalidate style="max-width:460px">
+      <label for="n-email">Your email<input id="n-email" type="email" autocomplete="email" placeholder="you@example.com"></label>
+      <button class="btn primary" id="n-send" type="submit" style="justify-self:start">Subscribe</button>
+      <div class="out" id="n-out" aria-live="polite"></div>
+    </form></section>
   <section class="s" id="faq" style="margin-top:0">
     <div class="s-head"><h2>Questions, answered</h2><p>Straight answers before you commit to anything.</p></div>
     <details class="q" open><summary>How fast will I see results?</summary><p>It depends on the platform and where you are starting from. Most engagements show visible movement, such as profile and channel fixes live and first outreach conversations happening, within the first couple of weeks. Real audience growth compounds from there rather than spiking overnight.</p></details>
@@ -423,4 +431,33 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-<!--End of Tawk.to Script--></body></html>
+<!--End of Tawk.to Script--><script>
+(function(){var $=function(s){return document.querySelector(s)};
+function briefText(){var n=($('#b-name')&&$('#b-name').value.trim())||'A visitor',em=$('#b-email')?$('#b-email').value.trim():'',l=$('#b-link')?$('#b-link').value.trim():'',msg=$('#b-msg')?$('#b-msg').value.trim():'';
+ return 'Hi, I would like to talk about: Platform: '+($('#b-plat')?$('#b-plat').value:'')+'. Goal: '+($('#b-goal')?$('#b-goal').value:'')+'. Plan: '+($('#b-tier')?$('#b-tier').value:'')+'. Link: '+(l||'not given')+'. '+(msg||'')+(em?' My email: '+em:'')}
+if($('#b-mailto')){$('#b-mailto').addEventListener('click',function(e){e.preventDefault();var n=($('#b-name')&&$('#b-name').value.trim())||'there';
+ window.location.href='mailto:emmanuel64775@email.com?subject='+encodeURIComponent('Project brief from '+n)+'&body='+encodeURIComponent(briefText())})}
+var nf=$('#news');
+if(nf){var KEY2="5157ed56-0b91-41c9-a44b-337d9c8df597";
+nf.addEventListener('submit',function(e){e.preventDefault();
+ var em=$('#n-email').value.trim(),out=$('#n-out'),sb=$('#n-send');
+ if(!em||em.indexOf('@')<1){out.textContent='Please add a valid email.';return}
+ sb.disabled=true;sb.textContent='Subscribing...';
+ fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+  body:JSON.stringify({access_key:KEY2,subject:'Avenro newsletter signup',from_name:'Avenro website',email:em,message:'New newsletter signup: '+em})})
+ .then(function(r){return r.json()}).then(function(j){out.textContent='Thanks, you are on the list.';sb.textContent='Subscribed';$('#n-email').value=''})
+ .catch(function(){out.textContent='Thanks, you are on the list.';sb.disabled=false;sb.textContent='Subscribe'});
+})}
+try{
+ if(!sessionStorage.getItem('avenro_popped')){
+  setTimeout(function(){
+   try{window.Tawk_API=window.Tawk_API||{};
+    if(Tawk_API.maximize){Tawk_API.maximize();sessionStorage.setItem('avenro_popped','1')}
+    else{window.Tawk_API.onLoad=function(){Tawk_API.maximize();sessionStorage.setItem('avenro_popped','1')}}
+   }catch(e){}
+  },20000);
+ }
+}catch(e){}
+})();
+</script>
+</body></html>
