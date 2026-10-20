@@ -386,7 +386,7 @@ function copy(text,btn,label){var done=function(){btn.textContent='Copied';setTi
 $('#mail-copy').addEventListener('click',function(){copy($('#mail').textContent,this,'Copy email')});
 document.querySelectorAll('[data-plan]').forEach(function(a){a.addEventListener('click',function(){var sel=$('#b-tier');for(var i=0;i<sel.options.length;i++){if(sel.options[i].text===a.getAttribute('data-plan'))sel.selectedIndex=i}})});
 $('#b-copy').addEventListener('click',function(){copy($('#b-out').getAttribute('data-brief')||$('#b-out').textContent,this,'Copy brief again')});
-var KEY="";/* Web3Forms access key goes here */
+var KEY="5157ed56-0b91-41c9-a44b-337d9c8df597";/* Web3Forms access key goes here */
 $('#brief').addEventListener('submit',function(e){e.preventDefault();
  var n=$('#b-name').value.trim(),em=$('#b-email').value.trim(),l=$('#b-link').value.trim(),msg=$('#b-msg').value.trim();
  var out=$('#b-out'),sb=$('#b-send');
